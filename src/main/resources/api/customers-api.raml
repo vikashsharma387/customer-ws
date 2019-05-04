@@ -1,0 +1,113 @@
+#%RAML 1.0
+version: v1
+title: Customers API
+
+types:
+  Customer: !include dataTypes/CustomerDataType.raml
+
+traits:
+  server_auth_error_status:
+    responses:
+      500:
+        body:
+          application/json:
+            example:
+              message: Something went wrong. Try Later!!
+      401:
+        body:
+          application/json:
+            example:
+              message: Not Authenticated.
+
+  Bad_request_status:
+    responses:
+      400:
+        body:
+          application/json:
+            example:
+              message:  Bad request   
+
+  Cust_Authentication:
+    headers:
+      client_id:
+        type: string
+        required: true  
+      client_secret:
+        type: string  
+        required: true
+
+
+/customers:
+  is: [server_auth_error_status,Cust_Authentication]
+  get:
+    #headers:
+      #Content-Type:
+        #required: true
+        #example: application/json
+        #default: application/json
+          
+    queryParameters:
+      city:
+        required: true
+        enum: [Bangalore,Chennai,Hydearbad]
+        example:  Bangalore
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            #examples:  !include examples/CustomersExample.raml
+            type: Customer[]
+          #application/xml:
+            #example:
+            #type:
+                  
+  post:
+    body:
+      application/json:
+        #examples:  !include examples/CustomerExample.raml
+        type: Customer
+    responses:
+      201:
+        body:
+          application/json:
+            example:  
+              message:  Customer has been Added
+              
+      
+  /{customerid}:
+    is: [server_auth_error_status,Cust_Authentication]
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              #examples:  !include examples/CustomerExample.raml
+              type: Customer 
+
+    put:
+      is: [Bad_request_status]
+      body:
+        application/json:
+          type: Customer
+          #examples: !include examples/CustomerExample.raml
+            
+
+      responses:
+        200:
+          body:
+            application/json:
+              example:  
+                message:  Customer has been updated
+                  
+    delete:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message:  Customer has been deleted    
+            
+        
+                
+      

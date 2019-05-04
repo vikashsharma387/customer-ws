@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="cusotmers_json" format="json">
+      <types:shape format="weave" example="examples/customer.json"><![CDATA[%dw 2.0
+type cusotmers_json = Array<{|
+  customerId: String, 
+  email: String, 
+  fullName: String, 
+  phoneNumber: String, 
+  addressLine1: String, 
+  addressLine2: String, 
+  city: String, 
+  state: String, 
+  pincode: Number {"typeId": "int"}
+|}> {"MetadataFormat": "json",
+"example": "[{\"customerId\":\"AXYZ123\",\"email\":\"something@gmail.com\",\"fullName\":\"MS Dhoni\",\"phoneNumber\":\"+91-9988998899\",\"addressLine1\":\"49, 1st Floor\",\"addressLine2\":\"RM Nagar\",\"city\":\"Bangalore\",\"state\":\"Karnataka\",\"pincode\":560016},{\"customerId\":\"AXYZ124\",\"email\":\"somethingelse@gmail.com\",\"fullName\":\"V Kohli\",\"phoneNumber\":\"+91-9987658899\",\"addressLine1\":\"50, 2nd Floor\",\"addressLine2\":\"RM Nagar\",\"city\":\"Bangalore\",\"state\":\"Karnataka\",\"pincode\":560016}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#73fc26fb-a6c1-43bf-ac66-25b936724fa6">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="cusotmers_json"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#f991117c-691b-42fd-8742-d08acd8bb478">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="cusotmers_json"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
