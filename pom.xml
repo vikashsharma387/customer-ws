@@ -35,7 +35,7 @@
 						<applicationName>customers-ws-aivs</applicationName>
 						<environment>Sandbox</environment>
 						<properties>
-							<key>value</key>
+							<env>prod</env>
 						</properties>
 					</cloudHubDeployment>
 					<sharedLibraries>
